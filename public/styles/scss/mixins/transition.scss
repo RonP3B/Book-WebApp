@@ -1,0 +1,10 @@
+@mixin hoverTransition($color, $backgroundColor) {
+  transition-property: background-color, color;
+  transition-duration: 0.2s;
+  transition-timing-function: linear;
+
+  &:hover {
+    color: $color;
+    background-color: $backgroundColor;
+  }
+}

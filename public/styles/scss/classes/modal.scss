@@ -1,0 +1,33 @@
+.my-modal {
+  background-image: $gradientWhite;
+  position: absolute;
+  transition: transform 1s ease;
+  width: 90%;
+  max-width: 25rem;
+  box-shadow: $shadow;
+  border-radius: 5px;
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    padding: 0.4rem;
+    border-bottom: 2px solid $darkCyan;
+
+    svg:nth-child(2) {
+      margin: 0 auto;
+      font-size: 5rem;
+      cursor: default;
+    }
+
+    .close-menu {
+      margin: 0 0 0 auto;
+      font-size: calc(1.5rem + 0.390625vw);
+      cursor: pointer;
+      transition: color 0.2s linear;
+
+      &:hover {
+        color: $darkCyan;
+      }
+    }
+  }
+}

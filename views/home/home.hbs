@@ -1,0 +1,87 @@
+<section class="container section">
+  <div class="button mt-3 mb-1" id="filter-option">
+    {{{logosObj.svgSearch}}}
+    Filtrar
+  </div>
+  <div class="overlay" id="overlay-filter" style="display: none;">
+    <div class="my-modal section__modal section__modal-closed">
+      <div class="my-modal__header">
+        {{{logosObj.svgCloseBox}}}
+        {{{logosObj.svgMagnifyingBook}}}
+      </div>
+      <form action="/" method="POST" class="section__filter-form">
+        <div class="form-group mb-2">
+          <label for="title">Titulo del libro:</label>
+          <input
+            class="form-control form-control-sm"
+            type="text"
+            id="title-filter"
+            name="title"
+            {{#if post}}value="{{filterTitle}}"{{/if}}
+          />
+        </div>
+        <label>Categorías:</label>
+        <div class="section__checkboxes">
+          {{#if noCategories}}
+            <label class="text-center">No hay ninguna categoría registrada</label>
+          {{else}}
+            {{#each categories}}
+              <div class="form-group mb-1">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value="{{this.id}}"
+                  id="{{this.id}}"
+                  {{#if ../post}}
+                    {{#if (contains ../checkboxIDsSet this.id)}}
+                      checked
+                    {{/if}}
+                  {{/if}}
+                />
+                <label class="form-check-label" for="{{this.id}}">
+                  {{this.name}}
+                </label>
+              </div>
+            {{/each}}
+          {{/if}}
+        </div>
+        <input type="hidden" id="checkbox-items" name="items" />
+        <div class="buttons-container">
+          <a href="/" class="button">REMOVER FILTROS</a>
+          <button class="btn button ms-2" type="button" id="btn-filter">APLICAR
+            FILTROS</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  {{#if noBooks}}
+    <div class="warning-res">
+      {{{logosObj.svgNoBook}}}
+      <h1 class="text-center">¡{{noBooksMsg}}!</h1>
+      <a href="/admin-books" class="btn button">Mantenimiento de libros</a>
+    </div>
+  {{else}}
+    <h1 class="text-center mt-3 mb-2">Listado de libros</h1>
+    <div class="items-container">
+      {{#each books}}
+        <a href="/details/{{this.id}}">
+          <article class="book mb-4">
+            <img src="/assets/images/addedImages/{{this.image}}" alt="potada" />
+            <div class="book__body">
+              <div class="book__info">
+                <h4 class="text-center">{{this.title}}</h4>
+                <p><strong>Año de publicación:</strong>
+                  {{this.publish_year}}</p>
+                <p><strong>Categoría:</strong>
+                  {{this.category.dataValues.name}}</p>
+                <p><strong>Autor:</strong> {{this.author.dataValues.name}}</p>
+                <p><strong>Editorial:</strong>
+                  {{this.editorial.dataValues.name}}</p>
+              </div>
+            </div>
+          </article>
+        </a>
+      {{/each}}
+    </div>
+  {{/if}}
+</section>

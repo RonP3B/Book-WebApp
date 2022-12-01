@@ -1,0 +1,25 @@
+@import "./mixins/breakpoints.scss";
+@import "./mixins/scrollbar.scss";
+@import "./mixins/transition.scss";
+
+@import "./config/variables.scss";
+
+@import "./blocks/reset.scss";
+@import "./blocks/body.scss";
+@import "./blocks/header.scss";
+@import "./blocks/footer.scss";
+
+@import "./classes/navbar.scss";
+@import "./classes/overlay.scss";
+@import "./classes/button.scss";
+@import "./classes/section.scss";
+@import "./classes/modal.scss";
+@import "./classes/buttons-container.scss";
+@import "./classes/warning-res.scss";
+@import "./classes/book.scss";
+@import "./classes/items-container.scss";
+@import "./classes/details.scss";
+@import "./classes/margin-center.scss";
+
+@import "./bootstrapAdditions/form.scss";
+@import "./bootstrapAdditions/card.scss";

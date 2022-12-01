@@ -1,0 +1,70 @@
+.form {
+  &-control,
+  &-select {
+    font-weight: 500;
+    border-color: $darkCyan;
+    color: $darkCyan;
+
+    &:focus {
+      color: $darkCyan;
+    }
+  }
+
+  &-img {
+    img {
+      height: 6rem;
+      width: 6rem;
+      border: 2px solid $darkCyan;
+      margin: 0.5rem auto;
+      display: block;
+    }
+
+    div:last-child {
+      display: flex;
+    }
+  }
+
+  &-category {
+    textarea {
+      max-height: 10rem;
+      min-height: 5rem;
+    }
+  }
+
+  @include small {
+    &-img {
+      img {
+        height: 6.5rem;
+        width: 6.5rem;
+      }
+    }
+  }
+
+  @include medium {
+    &-img {
+      img {
+        height: 7rem;
+        width: 7rem;
+      }
+    }
+  }
+
+  @include large {
+    &-img {
+      display: grid;
+      grid-template-columns: 1fr 4fr;
+      column-gap: 0.5rem;
+
+      img {
+        height: 7rem;
+        max-width: 100%;
+        margin: 0 auto;
+      }
+
+      &-flex {
+        display: block;
+        margin: auto 0;
+      }
+    }
+  }
+}

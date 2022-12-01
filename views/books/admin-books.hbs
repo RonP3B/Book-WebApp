@@ -1,0 +1,45 @@
+<section class="container section">
+  <a href="/admin-books/add" class="btn button margin-center mt-3">CREAR LIBRO</a>
+  {{#if noBooks}}
+    <div class="warning-res">
+      {{{logosObj.svgNoBook}}}
+      <h1 class="text-center">¡No hay libros para mostrar!</h1>
+    </div>
+  {{else}}
+    <h1 class="text-center mt-3 mb-2">Listado de libros</h1>
+    <div class="items-container">
+      {{#each books}}
+        <article>
+          <div class="book mb-4 book-edit">
+            <img
+              src="/assets/images/addedImages/{{this.image}}"
+              alt="portada"
+            />
+            <div class="book__body">
+              <div class="book__info">
+                <h4 class="text-center">{{this.title}}</h4>
+                <p><strong>Año de publicación:</strong>
+                  {{this.publish_year}}</p>
+                <p><strong>Categoría:</strong>
+                  {{this.category.dataValues.name}}</p>
+                <p><strong>Autor:</strong> {{this.author.dataValues.name}}</p>
+                <p><strong>Editorial:</strong>
+                  {{this.editorial.dataValues.name}}</p>
+              </div>
+              <div class="buttons-container">
+                <a
+                  href="/admin-books/edit/{{this.id}}"
+                  class="btn button"
+                >EDITAR</a>
+                <a
+                  href="/admin-books/delete/{{this.id}}"
+                  class="btn button ms-2"
+                >ELIMINAR</a>
+              </div>
+            </div>
+          </div>
+        </article>
+      {{/each}}
+    </div>
+  {{/if}}
+</section>

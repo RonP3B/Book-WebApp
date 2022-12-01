@@ -1,0 +1,66 @@
+.details {
+  &__title {
+    text-align: center;
+    margin: 1rem 0;
+    font-weight: 700;
+  }
+
+  &__content {
+    img {
+      height: 15rem;
+      display: block;
+      width: 100%;
+      max-width: max-content;
+      border: 3px solid $darkCyan;
+      margin: 0 auto 1rem auto;
+    }
+
+    &__info {
+      text-align: center;
+    }
+
+    p {
+      margin-bottom: 0.75rem;
+    }
+  }
+
+  .button {
+    margin: 1rem auto;
+  }
+
+  @include medium {
+    &__content {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      column-gap: 1.5rem;
+
+      img {
+        max-width: 100%;
+        height: auto;
+        width: auto;
+        margin: auto 0;
+      }
+
+      &__info {
+        margin: auto 0;
+
+        div {
+          display: flex;
+        }
+
+        div strong::after {
+          content: ":";
+        }
+
+        div p {
+          margin-left: 0.25rem;
+        }
+      }
+
+      div strong {
+        display: block;
+        text-align: center;
+      }
+    }
+  }
+}

@@ -1,0 +1,9 @@
+body {
+  font-family: $mainFont;
+  background-image: $gradientWhite;
+  color: $cyan;
+  min-width: 320px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}

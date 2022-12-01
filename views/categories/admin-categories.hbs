@@ -1,0 +1,43 @@
+<section class="container section">
+  <a href="/admin-categories/add" class="btn button margin-center mt-3">CREAR
+    CATEGORÍA</a>
+  {{#if noCategories}}
+    <div class="warning-res">
+      {{{logosObj.svgWarning}}}
+      <h1 class="text-center">¡No hay categorías para mostrar!</h1>
+    </div>
+  {{else}}
+    <h1 class="text-center mt-3 mb-2">Listado de categorías</h1>
+    <div class="items-container">
+      {{#each categories}}
+        <article class="mb-3">
+          <div class="card">
+            <div class="card-header">
+              <strong>{{this.name}}</strong>
+            </div>
+            <div class="card-body">
+              <h6 class="text-center"><strong>Descripción</strong></h6>
+              <div class="card-body-description">
+                <p>
+                  {{this.description}}
+                </p>
+              </div>
+              <p class="mb-3"><strong>Año de creación:
+                </strong>{{getYear this.createdAt}}</p>
+              <div class="buttons-container">
+                <a
+                  href="/admin-categories/edit/{{this.id}}"
+                  class="btn button"
+                >EDITAR</a>
+                <a
+                  href="/admin-categories/delete/{{this.id}}"
+                  class="btn button ms-2"
+                >ELIMINAR</a>
+              </div>
+            </div>
+          </div>
+        </article>
+      {{/each}}
+    </div>
+  {{/if}}
+</section>

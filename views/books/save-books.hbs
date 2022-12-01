@@ -1,0 +1,143 @@
+<section class="container section">
+  {{#if noAddition}}
+  <div class="warning-res">
+    {{{logosObj.svgWarning}}}
+    <h1>
+      Hace falta registrar los siguientes valores para crear un libro:<br>
+      {{#if noCategories}}|categorías| {{/if}} 
+      {{#if noAuthors}}|autores| {{/if}}
+      {{#if noEditorials}}|editoriales|{{/if}}
+    </h1>
+    <a href="/admin-books" class="btn button">VOLVER ATRAS</a>
+  </div>
+  {{else}}
+    <div class="card mt-3 mb-3">
+      <div class="card-header">
+        {{#if edit}} 
+            {{{logosObj.svgPapaDelRapDominicano}}}
+        {{else}}
+            {{{logosObj.svgAdd}}}
+        {{/if}} 
+        <h5 class="mb-0">{{#if edit}}Edi{{else}}Crea{{/if}}ción de libro</h5>
+      </div>
+      <div class="card-body">
+        <form
+          method="POST"
+          action="/admin-books/{{#if edit}}edit{{else}}add{{/if}}" 
+          class="form-save" 
+          enctype="multipart/form-data"
+        >
+          <div class="form-img mb-2">
+            <img 
+              src="/assets/images/{{#if edit}}addedImages/{{book.image}}{{else}}defaultBook.jpg{{/if}}" 
+              alt="portada"
+              id="image-added"
+            >
+            <div class="form-img-flex">
+              <label>Portada del libro:</label>
+              <div>
+                <input
+                  class="form-control form-control-sm {{#unless edit}}required-field{{/unless}}"
+                  type="text"
+                  id="image-name"
+                  disabled
+                  {{#if edit}}value="{{imageName}}"{{/if}} 
+                />
+                <label for="add-image" class="btn button">
+                  {{{logosObj.svgAddImage}}}
+                </label>
+              </div>
+            </div>
+            <input 
+              type="file"  
+              accept="image/*"
+              name="image"
+              id="add-image"
+              class="d-none"
+            >
+          </div>
+          <div class="form-group mb-2">
+            <label for="title">Título del libro:</label>
+            <input
+              class="form-control form-control-sm required-field"
+              type="text"
+              id="title"
+              name="title"
+              {{#if edit}}value="{{book.title}}"{{/if}}  
+            />
+          </div>
+          <div class="form-group mb-2">
+            <label for="publishYear">Año de publicación del libro:</label>
+            <input
+              class="form-control form-control-sm required-field"
+              type="text"
+              id="publishYear"
+              name="publish_year"
+              {{#if edit}}value="{{book.publish_year}}"{{/if}}
+            />
+          </div>
+          <div class="form-group mb-2">
+            <label for="categories">Categoría del libro:</label>
+            <select
+              class="form-select form-select-sm required-field"
+              id="categories"
+              name="categoryId"
+            >
+              <option value="">Selecciona la categoría</option>
+              {{#each categories}}
+                <option value="{{this.id}}" 
+                    {{#if (equal this.id ../book.categoryId)}}selected{{/if}}
+                >{{this.name}}</option>
+              {{/each}}
+            </select>
+          </div>
+          <div class="form-group mb-2">
+            <label for="author">Autor del libro:</label>
+            <select
+              class="form-select form-select-sm required-field"
+              id="author"
+              name="authorId"
+            >
+              <option value="">Selecciona el autor</option>
+              {{#each authors}}
+                <option value="{{this.id}}" 
+                    {{#if (equal this.id ../book.authorId)}}selected{{/if}}
+                >{{this.name}}</option>
+              {{/each}}
+            </select>
+          </div>
+          <div class="form-group mb-2">
+            <label for="editorial">Editorial del libro:</label>
+            <select
+              class="form-select form-select-sm required-field"
+              id="editorial"
+              name="editorialId"
+            >
+              <option value="">Selecciona la editorial</option>
+              {{#each editorials}}
+                <option value="{{this.id}}" 
+                    {{#if (equal this.id ../book.editorialId)}}selected{{/if}}
+                >{{this.name}}</option>
+              {{/each}}
+            </select>
+          </div>
+          {{#if edit}}
+            <input type="hidden" name="id" value="{{book.id}}" />
+          {{/if}}
+          <div class="buttons-container">
+            <a href="/admin-books" class="btn button">
+              Volver atras
+            </a>
+            <button
+              type="button"
+              class="btn button ms-1"
+              id="btn-save"
+            >
+              {{#if edit}}Edit{{else}}Cre{{/if}}ar libro
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  {{/if}}
+</section>

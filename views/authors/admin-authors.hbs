@@ -1,0 +1,41 @@
+<section class="container section">
+  <a href="/admin-authors/add" class="btn button margin-center mt-3">CREAR AUTOR</a>
+  {{#if noAuthors}}
+    <div class="warning-res">
+      {{{logosObj.svgWarning}}}
+      <h1 class="text-center">¡No hay autores para mostrar!</h1>
+    </div>
+  {{else}}
+    <h1 class="text-center mt-3 mb-2">Listado de autores</h1>
+    <div class="items-container">
+      {{#each authors}}
+        <article class="mb-3">
+          <div class="card">
+            <div class="card-header">
+              <strong>{{this.name}}</strong>
+            </div>
+            <div class="card-body">
+              <div class="card-author info">
+                <p><strong>Correo del autor:
+                  </strong>{{this.email}}</p>
+                <p><strong>Año de creación: </strong>{{getYear
+                    this.createdAt
+                  }}</p>
+              </div>
+              <div class="buttons-container mt-2">
+                <a
+                  href="/admin-authors/edit/{{this.id}}"
+                  class="btn button"
+                >EDITAR</a>
+                <a
+                  href="/admin-authors/delete/{{this.id}}"
+                  class="btn button ms-2"
+                >ELIMINAR</a>
+              </div>
+            </div>
+          </div>
+        </article>
+      {{/each}}
+    </div>
+  {{/if}}
+</section>

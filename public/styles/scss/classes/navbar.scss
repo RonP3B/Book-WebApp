@@ -1,0 +1,31 @@
+.navbar {
+  &__modal-closed {
+    transform: translateX(200%);
+  }
+
+  &__list {
+    a {
+      display: flex;
+      justify-content: center;
+      font-weight: 700;
+      padding: 0.55rem 0.85rem;
+      border-top: 2px $darkCyan solid;
+      text-transform: capitalize;
+      @include hoverTransition($darkCyan, $cyan);
+    }
+
+    li:first-child a {
+      border-top: none;
+    }
+  }
+
+  @media screen and (max-height: 390px) {
+    &__list a {
+      padding: 0.15rem 0.3rem;
+    }
+
+    &__modal div {
+      padding: 0.5rem;
+    }
+  }
+}

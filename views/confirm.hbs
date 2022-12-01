@@ -1,0 +1,28 @@
+<section class="container section">
+  <div class="card mt-3 mb-3 confirm">
+    <div class="card-header">
+      {{{logosObj.svgTriangleWarning}}}
+      <h5 class="mb-0">Confirmación</h5>
+    </div>
+    <div class="card-body">
+      <form method="POST" action="/admin-{{page}}/delete" class="form-save">
+        <p class="mb-2">¿Está seguro que desea
+          <strong>eliminar</strong>
+          {{modelMsg}}?</p>
+        <p class="mb-2"><strong>{{model}} a eliminar:</strong> {{name}}</p>
+        {{#if cascade}}
+          <p class="mb-2"><strong>También serán eliminados sus libros asociados</strong></p>
+        {{/if}}
+        <div class="buttons-container">
+          <a href="/admin-{{page}}" class="btn button">
+            Cancelar
+          </a>
+          <button type="button" class="btn button ms-2" id="btn-save">
+            Aceptar
+          </button>
+        </div>
+        <input type="hidden" name="id" value="{{id}}" />
+      </form>
+    </div>
+  </div>
+</section>

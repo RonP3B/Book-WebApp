@@ -1,0 +1,65 @@
+<section class="container section">
+  <div class="card mt-3 mb-3">
+        <div class="card-header">
+          {{#if edit}} 
+              {{{logosObj.svgPapaDelRapDominicano}}}
+          {{else}}
+            {{{logosObj.svgAdd}}}
+          {{/if}} 
+          <h5 class="mb-0">{{#if edit}}Edi{{else}}Crea{{/if}}ción de editorial</h5>
+        </div>
+        <div class="card-body">
+          <form
+            method="POST"
+            action="/admin-editorials/{{#if edit}}edit{{else}}add{{/if}}" 
+            class="form-save" 
+          >
+            <div class="form-group mb-2">
+              <label for="name">Nombre de la editorial:</label>
+              <input
+                class="form-control form-control-sm required-field"
+                type="text"
+                id="name"
+                name="name"
+                {{#if edit}}value="{{editorial.name}}"{{/if}}
+              />
+            </div>
+            <div class="form-group mb-2">
+              <label for="phone">Télefono de la editorial:</label>
+              <input
+                class="form-control form-control-sm required-field"
+                type="tel"
+                id="phone"
+                name="phone"
+                {{#if edit}}value="{{editorial.phone}}"{{/if}}
+              />
+            </div>
+            <div class="form-group mb-2">
+              <label for="country">País de la editorial:</label>
+              <input
+                class="form-control form-control-sm required-field"
+                type="text"
+                id="country"
+                name="country"
+                {{#if edit}}value="{{editorial.country}}"{{/if}}
+              />
+            </div>
+            {{#if edit}}
+              <input type="hidden" name="id" value="{{editorial.id}}" />
+            {{/if}}
+            <div class="buttons-container">
+              <a href="/admin-editorials" class="btn button">
+                Volver atras
+              </a>
+              <button
+                type="button"
+                class="btn button ms-1"
+                id="btn-save"
+              >
+                {{#if edit}}Edit{{else}}Cre{{/if}}ar editorial
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+</section>

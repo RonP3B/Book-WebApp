@@ -1,0 +1,85 @@
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="Roniell Pérez" />
+    <meta
+      name="description"
+      content="Esta es una página que permite que el usuario lleve un manejo/mantenimiento de libros"
+    />
+    <link rel="shortcut icon" href="/assets/images/mainIcon.png" />
+    <link
+      rel="stylesheet"
+      href="/styles/css/libs/bootstrap/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="/styles/css/styles.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+    />
+    <title>BookApp</title>
+  </head>
+  <body>
+    <header>
+      <a href="/"><img src="/assets/images/mainIcon.png" alt="Page logo" />
+        <label>BookApp</label>
+      </a>
+      <nav class="navbar">
+        <div class="button" id="menu-option">
+          Menú
+          {{{logosObj.svgBars}}}
+        </div>
+        <div class="overlay" id="overlay-menu" style="display: none;">
+          <div class="my-modal navbar__modal navbar__modal-closed">
+            <div class="my-modal__header">
+              {{{logosObj.svgCloseBox}}}
+              {{{logosObj.svgBooks}}}
+            </div>
+            <ul class="navbar__list">
+              <li><a href="/">home</a></li>
+              <li><a href="/admin-books">mantenimiento de libros</a></li>
+              <li><a href="/admin-categories">mantenimiento de categorías</a></li>
+              <li><a href="/admin-authors">mantenimiento de autores</a></li>
+              <li><a href="/admin-editorials">mantenimiento de editoriales</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main class="container">
+      {{{body}}}
+    </main>
+    <footer>
+      <p>Creador - Roniell Pérez - Más sobre mí:</p>
+      <ul class="footer__social">
+        <li>
+          <a href="https://github.com/RonP3B" target="_blank">
+            {{{logosObj.svgGithub}}}
+          </a>
+        </li>
+        <li>
+          <a href="https://t.me/RoniellPB" target="_blank">
+            {{{logosObj.svgTelegram}}}
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://www.linkedin.com/in/roniell-p%C3%A9rez-967882229/"
+            target="_blank"
+          >
+            {{{logosObj.svgLinkedin}}}
+          </a>
+        </li>
+      </ul>
+    </footer>
+  </body>
+  <script src="/js/libs/bootstrap/bootstrap.min.js"></script>
+  <script src="/js/libs/jquery/jquery-3.6.0.min.js"></script>
+  <script
+    type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/toastify-js"
+  ></script>
+  <script src="/js/index.js" type="module"></script>
+</html>

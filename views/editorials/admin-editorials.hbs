@@ -1,0 +1,43 @@
+<section class="container section">
+  <a href="/admin-editorials/add" class="btn button margin-center mt-3">CREAR
+    EDITORIAL</a>
+  {{#if noEditorials}}
+    <div class="warning-res">
+      {{{logosObj.svgWarning}}}
+      <h1 class="text-center">¡No hay editoriales para mostrar!</h1>
+    </div>
+  {{else}}
+    <h1 class="text-center mt-3 mb-2">Listado de editoriales</h1>
+    <div class="items-container">
+      {{#each editorials}}
+        <article class="mb-3">
+          <div class="card">
+            <div class="card-header">
+              <strong>{{this.name}}</strong>
+            </div>
+            <div class="card-body">
+              <div class="card-editorial info">
+                <p><strong>Telefono de la editorial:
+                  </strong>{{this.phone}}</p>
+                <p><strong>País de la editorial: </strong>{{this.country}}</p>
+                <p><strong>Año de creación: </strong>{{getYear
+                    this.createdAt
+                  }}</p>
+              </div>
+              <div class="buttons-container mt-2">
+                <a
+                  href="/admin-editorials/edit/{{this.id}}"
+                  class="btn button"
+                >EDITAR</a>
+                <a
+                  href="/admin-editorials/delete/{{this.id}}"
+                  class="btn button ms-2"
+                >ELIMINAR</a>
+              </div>
+            </div>
+          </div>
+        </article>
+      {{/each}}
+    </div>
+  {{/if}}
+</section>

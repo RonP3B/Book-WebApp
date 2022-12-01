@@ -1,0 +1,33 @@
+<section class="details">
+  <h1 class="details__title">{{book.title}}</h1>
+  <div class="details__content">
+    <img src="/assets/images/addedImages/{{book.image}}" alt="portada" />
+    <div class="details__content__info">
+      <div>
+        <strong>Año de publicación</strong>
+        <p>{{book.publish_year}}</p>
+      </div>
+      <div>
+        <strong>Categoria</strong>
+        <p>{{book.category.dataValues.name}}</p>
+      </div>
+      <div>
+        <strong>Autor</strong>
+        <p>{{book.author.dataValues.name}}</p>
+      </div>
+      <div>
+        <strong>Editorial</strong>
+        <p>{{book.editorial.dataValues.name}}</p>
+      </div>
+      <div>
+        <strong>País del editorial</strong>
+        <p>{{book.editorial.dataValues.country}}</p>
+      </div>
+      <div>
+        <strong>Teléfono del editorial</strong>
+        <p>{{book.editorial.dataValues.phone}}</p>
+      </div>
+    </div>
+  </div>
+  <a href="/" class="btn button">VOLVER AL HOME</a>
+</section>

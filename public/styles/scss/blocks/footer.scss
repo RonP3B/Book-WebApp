@@ -1,0 +1,22 @@
+footer {
+  margin-top: auto;
+  border-top: solid 1px $darkCyan;
+  padding: 0.3rem 0.8rem;
+  display: flex;
+  flex-direction: column;
+  place-items: center;
+  font-weight: 600;
+
+  ul {
+    display: flex;
+
+    a {
+      transition: color 0.2s linear;
+      font-size: calc(20px + 0.390625vw);
+
+      &:hover {
+        color: $darkCyan;
+      }
+    }
+  }
+}

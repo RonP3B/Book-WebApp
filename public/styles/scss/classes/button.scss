@@ -1,0 +1,17 @@
+.button {
+  font-weight: 700;
+  font-size: calc(0.65rem + 0.390625vw);
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
+  background-color: $cyan;
+  color: aliceblue;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  width: max-content;
+  @include hoverTransition($cyan, $darkCyan);
+
+  svg {
+    font-size: calc(1.2rem + 0.390625vw);
+  }
+}
