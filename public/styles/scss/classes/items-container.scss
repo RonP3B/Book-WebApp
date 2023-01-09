@@ -1,8 +1,8 @@
 .items-container {
-  column-gap: 2rem;
+  column-gap: 1.5rem;
 
-  @include small {
+  @include extraLarge {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(338.8px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
   }
 }
