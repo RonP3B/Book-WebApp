@@ -8,6 +8,11 @@ const Authors = sequelizeObj.define("authors", {
     primaryKey: true,
   },
 
+  user_id: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+
   name: {
     type: Sequelize.STRING,
     allowNull: false,

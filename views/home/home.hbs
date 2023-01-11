@@ -9,7 +9,8 @@
         {{{logosObj.svgCloseBox}}}
         {{{logosObj.svgMagnifyingBook}}}
       </div>
-      <form action="/" method="POST" class="section__filter-form">
+      <form action="/books/filter" method="POST" class="section__filter-form">
+        <input name="_csrf" value="{{csrfToken}}" type="hidden" />
         <div class="form-group mb-2">
           <label for="title">Titulo del libro:</label>
           <input
@@ -22,39 +23,37 @@
         </div>
         <label>Categorías:</label>
         <div class="section__checkboxes">
-          {{#if noCategories}}
-            <label class="text-center">No hay ninguna categoría registrada</label>
-          {{else}}
-            {{#each categories}}
-              <div class="form-group mb-1">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  value="{{this.id}}"
-                  id="{{this.id}}"
-                  {{#if ../post}}
-                    {{#if (contains ../checkboxIDsSet this.id)}}
-                      checked
-                    {{/if}}
+          {{#each categories}}
+            <div class="form-group mb-1">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                value="{{this.id}}"
+                id="{{this.id}}"
+                {{#if ../post}}
+                  {{#if (contains ../checkboxIDsSet this.id)}}
+                    checked
                   {{/if}}
-                />
-                <label class="form-check-label" for="{{this.id}}">
-                  {{this.name}}
-                </label>
-              </div>
+                {{/if}}
+              />
+              <label class="form-check-label" for="{{this.id}}">
+                {{this.name}}
+              </label>
+            </div>
+            {{else}}
+              <label class="text-center">No hay ninguna categoría registrada</label>
             {{/each}}
-          {{/if}}
         </div>
         <input type="hidden" id="checkbox-items" name="items" />
         <div class="buttons-container">
-          <a href="/" class="button">REMOVER FILTROS</a>
+          <a href="/books" class="button">REMOVER FILTROS</a>
           <button class="btn button ms-2" type="button" id="btn-filter">APLICAR
             FILTROS</button>
         </div>
       </form>
     </div>
   </div>
-  {{#if noBooks}}
+  {{#unless books}}
     <div class="warning-res">
       {{{logosObj.svgNoBook}}}
       <h1 class="text-center">¡{{noBooksMsg}}!</h1>
@@ -64,7 +63,7 @@
     <h1 class="text-center mt-3 mb-2">Listado de libros</h1>
     <div class="items-container">
       {{#each books}}
-        <a href="/details/{{this.id}}">
+        <a href="/books/details/{{this.id}}">
           <article class="book mb-4">
             <img src="/assets/images/addedImages/{{this.image}}" alt="potada" />
             <div class="book__body">
@@ -83,5 +82,5 @@
         </a>
       {{/each}}
     </div>
-  {{/if}}
+  {{/unless}}
 </section>

@@ -2,6 +2,8 @@
   <div class="warning-res">
     {{{logo}}}
     <h1>{{errorMsg}}</h1>
-    <a href="/" class="btn button">VOLVER AL HOME</a>
+    <a href="/{{#if isAuthenticated}}books{{/if}}" class="btn button">
+      VOLVER A{{#if isAuthenticated}} LIBROS{{else}}L INICIO DE SESIÓN{{/if}}
+    </a>
   </div>
 </section>

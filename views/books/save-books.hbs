@@ -4,9 +4,9 @@
     {{{logosObj.svgWarning}}}
     <h1>
       Hace falta registrar los siguientes valores para crear un libro:<br>
-      {{#if noCategories}}|categorías| {{/if}} 
-      {{#if noAuthors}}|autores| {{/if}}
-      {{#if noEditorials}}|editoriales|{{/if}}
+      {{#unless categories}}|categorías| {{/unless}} 
+      {{#unless authors}}|autores| {{/unless}}
+      {{#unless editorials}}|editoriales|{{/unless}}
     </h1>
     <a href="/admin-books" class="btn button">VOLVER ATRAS</a>
   </div>
@@ -27,6 +27,7 @@
           class="form-save" 
           enctype="multipart/form-data"
         >
+          <input name="_csrf" value="{{csrfToken}}" type="hidden" />
           <div class="form-img mb-2">
             <img 
               src="/assets/images/addedImages/{{#if edit}}{{book.image}}{{else}}defaultBook.jpg{{/if}}" 

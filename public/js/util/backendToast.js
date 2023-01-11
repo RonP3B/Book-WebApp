@@ -1,6 +1,6 @@
-export const showToast = (toastMsg) => {
+const showBackendToast = (msg) => {
   Toastify({
-    text: toastMsg,
+    text: msg,
     duration: 3500,
     gravity: "bottom",
     position: "right",
@@ -13,4 +13,4 @@ export const showToast = (toastMsg) => {
       fontWeight: 500,
     },
   }).showToast();
-};
+}

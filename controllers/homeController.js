@@ -1,28 +1,25 @@
-const { logosObj } = require("../exports/util");
 const { Editorials, Categories, Authors, Books } = require("../exports/models");
 const { internalErrorRes } = require("../exports/helpers");
 
 exports.getHome = async (req, res, next) => {
   try {
-    const categoriesRes = await Categories.findAll();
+    const categoriesRes = await Categories.findAll({ where: { user_id: req.session.user.id } });
     const bookRes = await Books.findAll({
       include: [
         { model: Editorials },
         { model: Categories },
         { model: Authors },
       ],
+      where: { user_id: req.session.user.id }
     });
 
     const categories = categoriesRes.map((res) => res.dataValues);
     const books = bookRes.map((res) => res.dataValues);
 
     res.render("home/home", {
-      logosObj,
       books,
       categories,
-      noBooks: books.length === 0,
       noBooksMsg: "No hay libros para mostrar",
-      noCategories: categories.length === 0,
     });
   } catch (error) {
     console.log(`\nError: ${error}\n`);
@@ -40,14 +37,14 @@ exports.getBookDetails = async (req, res, next) => {
         { model: Categories },
         { model: Authors },
       ],
-      where: { id },
+      where: { id, user_id: req.session.user.id }
     });
 
     if (!bookRes) return res.redirect("/");
 
     const book = bookRes.dataValues;
 
-    res.render("home/book-details", { logosObj, book });
+    res.render("home/book-details", { book });
   } catch (error) {
     console.log(`\nError: ${error}\n`);
     internalErrorRes(res);
@@ -58,47 +55,47 @@ exports.postHome = async (req, res, next) => {
   try {
     const { items, title } = req.body;
     const checkboxIDs = items ? items.split(",") : null;
-    const categoriesRes = await Categories.findAll();
+    const categoriesRes = await Categories.findAll({ where: { user_id: req.session.user.id } });
     const categories = categoriesRes.map((res) => res.dataValues);
     let filteredBooks;
 
-    //El usuario filtra por titulo y categorías
     if (checkboxIDs && title) {
       filteredBooks = await Books.findAll({
-        where: { categoryId: checkboxIDs, title: title.toLowerCase() },
+        where: {
+          categoryId: checkboxIDs,
+          title: title.toLowerCase(),
+          user_id: req.session.user.id
+        },
         include: [
           { model: Editorials },
           { model: Categories },
-          { model: Authors },
-        ],
+          { model: Authors }
+        ]
       });
     }
 
-    //El usuario filtra solo por categorías
     else if (checkboxIDs) {
       filteredBooks = await Books.findAll({
-        where: { categoryId: checkboxIDs },
+        where: { categoryId: checkboxIDs, user_id: req.session.user.id },
         include: [
           { model: Editorials },
           { model: Categories },
-          { model: Authors },
-        ],
+          { model: Authors }
+        ]
       });
     }
 
-    //El usuario filtra solo por titulo
     else if (title) {
       filteredBooks = await Books.findAll({
-        where: { title: title.toLowerCase() },
+        where: { title: title.toLowerCase(), user_id: req.session.user.id },
         include: [
           { model: Editorials },
           { model: Categories },
-          { model: Authors },
-        ],
+          { model: Authors }
+        ]
       });
     }
 
-    //El usuario puso mano en la validacion frontend
     else return res.redirect("/");
 
     const books = filteredBooks.map((res) => res.dataValues);
@@ -107,15 +104,12 @@ exports.postHome = async (req, res, next) => {
     if (checkboxIDs) checkboxIDs.forEach((item) => checkboxIDsSet.add(item));
 
     res.render("home/home", {
-      logosObj,
       books,
       categories,
-      noBooks: books.length === 0,
       noBooksMsg: "No hay libros que cumplan con los filtros",
-      noCategories: categories.length === 0,
       post: true,
       filterTitle: title,
-      checkboxIDsSet,
+      checkboxIDsSet
     });
   } catch (error) {
     console.log(`\nError: ${error}\n`);

@@ -1,0 +1,45 @@
+<section class="container section">
+  <div class="card mt-3 mb-3">
+    <div class="card-header">
+      {{{logosObj.svgAuthentication}}}
+      <h5 class="mb-0">Inicio de sesión</h5>
+    </div>
+    <div class="card-body">
+      <form method="POST" action="/log-in" class="form-save">
+        <input name="_csrf" value="{{csrfToken}}" type="hidden" />
+        <div class="form-group mb-2">
+          <label for="username">Nombre de usuario:</label>
+          <input
+            class="form-control form-control-sm required-field"
+            type="text"
+            id="username"
+            name="username"
+            autofocus
+          />
+        </div>
+        <div class="form-group mb-2">
+          <label for="password">Contraseña:</label>
+          <input
+            class="form-control form-control-sm required-field"
+            type="password"
+            id="password"
+            name="password"
+          />
+        </div>
+        <div class="buttons-container">
+          <a href="/sign-up" class="btn button">
+            Registrarse
+          </a>
+          <button type="button" class="btn button ms-1" id="btn-save">
+            Iniciar sesión
+          </button>
+        </div>
+        <div class="text-center mt-2">
+          <a href="/forgot-password/find-user">
+            ¿Olvidaste tu contraseña?
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

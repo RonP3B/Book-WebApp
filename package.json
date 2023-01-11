@@ -1,19 +1,22 @@
 {
   "name": "bookapp",
   "version": "1.0.0",
-  "description": "Simple CRUD for books management",
+  "description": "CRUD for books management",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "dev": "nodemon app.js",
-    "test": "mocha tests/*.js --timeout 60000 -r dotenv/config --reporter mochawesome --reporter-options reportDir=./tests/report,reportFilename=seleniumTestReport"
+    "dev": "nodemon app.js"
   },
   "author": "Roniell Perez",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "connect-flash": "^0.1.1",
+    "csurf": "^1.11.0",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-handlebars": "^6.0.6",
+    "express-session": "^1.17.3",
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.8.0",
     "pg": "^8.8.0",

@@ -1,6 +1,5 @@
 const crypto = require("crypto");
 const fs = require("fs");
-const { logosObj } = require("../exports/util");
 const { Editorials, Categories, Authors, Books } = require("../exports/models");
 const { internalErrorRes, getSelectValues } = require("../exports/helpers");
 
@@ -12,15 +11,11 @@ exports.getBooks = async (req, res, next) => {
         { model: Categories },
         { model: Authors },
       ],
+      where: { user_id: req.session.user.id }
     });
 
     const books = bookRes.map((res) => res.dataValues);
-
-    res.render("books/admin-books", {
-      logosObj,
-      books,
-      noBooks: books.length === 0,
-    });
+    res.render("books/admin-books", { books });
   } catch (error) {
     console.log(`\nError: ${error}\n`);
     internalErrorRes(res);
@@ -29,22 +24,18 @@ exports.getBooks = async (req, res, next) => {
 
 exports.getAddBook = async (req, res, next) => {
   try {
-    const { editorials, categories, authors } = await getSelectValues();
+    const { editorials, categories, authors } = await getSelectValues(req);
 
     const noCategories = categories.length === 0;
     const noEditorials = editorials.length === 0;
     const noAuthors = authors.length === 0;
 
     res.render("books/save-books", {
-      logosObj,
       edit: false,
       editorials,
       categories,
       authors,
-      noEditorials,
-      noAuthors,
-      noCategories,
-      noAddition: noCategories || noEditorials || noAuthors,
+      noAddition: noCategories || noEditorials || noAuthors
     });
   } catch (error) {
     console.log(`\nError: ${error}\n`);
@@ -55,23 +46,21 @@ exports.getAddBook = async (req, res, next) => {
 exports.getEditBook = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const booksRes = await Books.findOne({ where: { id } });
+    const booksRes = await Books.findOne({ where: { id, user_id: req.session.user.id } });
 
     if (!booksRes) return res.redirect("/admin-books");
 
     const book = booksRes.dataValues;
-    const { editorials, categories, authors } = await getSelectValues();
+    const { editorials, categories, authors } = await getSelectValues(req);
     const imageName = book.image.substring(book.image.indexOf("_") + 1);
 
     res.render("books/save-books", {
-      logosObj,
       edit: true,
       book,
       imageName,
       editorials,
       categories,
-      authors,
-      noAddition: false,
+      authors
     });
   } catch (error) {
     console.log(`\nError: ${error}\n`);
@@ -82,20 +71,18 @@ exports.getEditBook = async (req, res, next) => {
 exports.getDeleteBook = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const bookRes = await Books.findOne({ where: { id } });
+    const bookRes = await Books.findOne({ where: { id, user_id: req.session.user.id } });
 
     if (!bookRes) return res.redirect("/admin-books");
 
     const name = bookRes.dataValues.title;
 
     res.render("confirm", {
-      logosObj,
-      cascade: false,
       page: "books",
       model: "Libro",
       modelMsg: "este libro",
       name,
-      id,
+      id
     });
   } catch (error) {
     console.log(`\nError: ${error}\n`);
@@ -119,6 +106,7 @@ exports.postAddBook = async (req, res, next) => {
     if (backendValidation) {
       await Books.create({
         id: crypto.randomUUID(),
+        user_id: req.session.user.id,
         title: title.toLowerCase(),
         publish_year,
         categoryId,
@@ -128,6 +116,7 @@ exports.postAddBook = async (req, res, next) => {
       });
     }
 
+    req.flash("msg", "Libro creado exitosamente");
     res.redirect("/admin-books");
   } catch (error) {
     console.log(`\nError: ${error}\n`);
@@ -137,8 +126,7 @@ exports.postAddBook = async (req, res, next) => {
 
 exports.postEditBook = async (req, res, next) => {
   try {
-    const { id, title, publish_year, categoryId, authorId, editorialId } =
-      req.body;
+    const { id, title, publish_year, categoryId, authorId, editorialId } = req.body;
     const imageFile = req.file;
 
     if (id && publish_year && title && categoryId && authorId && editorialId) {
@@ -152,9 +140,10 @@ exports.postEditBook = async (req, res, next) => {
 
       if (imageFile) newValues.image = imageFile.filename;
 
-      await Books.update(newValues, { where: { id } });
+      await Books.update(newValues, { where: { id, user_id: req.session.user.id } });
     }
 
+    req.flash("msg", "Libro editado exitosamente");
     res.redirect("/admin-books");
   } catch (error) {
     console.log(`\nError: ${error}\n`);
@@ -165,14 +154,16 @@ exports.postEditBook = async (req, res, next) => {
 exports.postDeleteBook = async (req, res, next) => {
   try {
     const id = req.body.id;
-    const bookRes = await Books.findOne({ where: { id } });
+    const bookRes = await Books.findOne({ where: { id, user_id: req.session.user.id } });
 
     if (!bookRes) return res.redirect("/admin-books");
 
     const img = bookRes.dataValues.image;
     fs.unlinkSync(`./public/assets/images/addedImages/${img}`);
 
-    await Books.destroy({ where: { id } });
+    await bookRes.destroy();
+
+    req.flash("msg", "Libro eliminado exitosamente");
     res.redirect("/admin-books");
   } catch (error) {
     console.log(`\nError: ${error}\n`);

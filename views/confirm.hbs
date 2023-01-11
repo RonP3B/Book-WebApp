@@ -6,11 +6,12 @@
     </div>
     <div class="card-body">
       <form method="POST" action="/admin-{{page}}/delete" class="form-save">
+        <input name="_csrf" value="{{csrfToken}}" type="hidden" />
         <p class="mb-2">¿Está seguro que desea
           <strong>eliminar</strong>
           {{modelMsg}}?</p>
         <p class="mb-2"><strong>{{model}} a eliminar:</strong> {{name}}</p>
-        {{#if cascade}}
+        {{#if isNotBook}}
           <p class="mb-2"><strong>También serán eliminados sus libros asociados</strong></p>
         {{/if}}
         <div class="buttons-container">

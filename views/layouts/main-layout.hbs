@@ -23,32 +23,36 @@
   </head>
   <body>
     <header>
-      <a href="/"><img src="/assets/images/mainIcon.png" alt="Page logo" />
+      <a href="/{{#if isAuthenticated}}books{{/if}}">
+        <img src="/assets/images/mainIcon.png" alt="Page logo" />
         <label>BookApp</label>
       </a>
-      <nav class="navbar">
-        <div class="button" id="menu-option">
-          Menú
-          {{{logosObj.svgBars}}}
-        </div>
-        <div class="overlay" id="overlay-menu" style="display: none;">
-          <div class="my-modal navbar__modal navbar__modal-closed">
-            <div class="my-modal__header">
-              {{{logosObj.svgCloseBox}}}
-              {{{logosObj.svgBooks}}}
-            </div>
-            <ul class="navbar__list">
-              <li><a href="/">home</a></li>
-              <li><a href="/admin-books">mantenimiento de libros</a></li>
-              <li><a href="/admin-categories">mantenimiento de categorías</a></li>
-              <li><a href="/admin-authors">mantenimiento de autores</a></li>
-              <li><a href="/admin-editorials">mantenimiento de editoriales</a></li>
-            </ul>
+      {{#if isAuthenticated}}
+        <nav class="navbar">
+          <div class="button" id="menu-option">
+            Menú
+            {{{logosObj.svgBars}}}
           </div>
-        </div>
-      </nav>
+          <div class="overlay" id="overlay-menu" style="display: none;">
+            <div class="my-modal navbar__modal navbar__modal-closed">
+              <div class="my-modal__header">
+                {{{logosObj.svgCloseBox}}}
+                {{{logosObj.svgBooks}}}
+              </div>
+              <ul class="navbar__list">
+                <li><a href="/books">libros</a></li>
+                <li><a href="/admin-books">mantenimiento de libros</a></li>
+                <li><a href="/admin-categories">mantenimiento de categorías</a></li>
+                <li><a href="/admin-authors">mantenimiento de autores</a></li>
+                <li><a href="/admin-editorials">mantenimiento de editoriales</a></li>
+                <li><a href="/log-out">cerrar sesión</a></li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      {{/if}}
     </header>
-    <main class="container">
+    <main class="container mt-auto mb-auto">
       {{{body}}}
     </main>
     <footer>
@@ -81,5 +85,15 @@
     type="text/javascript"
     src="https://cdn.jsdelivr.net/npm/toastify-js"
   ></script>
+  {{! Backend toasts }}
+  {{#if messages}}
+    <script src="/js/util/backendToast.js"></script>
+    {{#each messages}}
+      <script type="text/javascript">
+        showBackendToast({{{json this}}})
+      </script>
+    {{/each}}
+  {{/if}}
+  {{! Backend toasts }}
   <script src="/js/index.js" type="module"></script>
 </html>

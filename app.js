@@ -4,11 +4,17 @@ require("dotenv").config();
 const express = require("express");
 const multer = require("multer");
 const path = require("path");
+const session = require("express-session");
+const flash = require("connect-flash");
+const csrf = require("csurf");
+const csrfProtection = csrf();
 const { engine } = require("express-handlebars");
 const { databaseObj, imgStorage } = require("./exports/util");
-const { Books, Editorials, Authors, Categories } = require("./exports/models");
+const { Books, Editorials, Authors, Categories, User } = require("./exports/models");
+const { locals, redirects } = require("./exports/middlewares");
 const { getBook, sendDefaultMail } = require("./exports/helpers");
 const {
+  authRouter,
   homeRouter,
   notFoundRouter,
   booksRouter,
@@ -30,6 +36,7 @@ app.engine(
       equal: (a, b) => a === b,
       contains: (set, item) => set.has(item),
       getYear: (date) => date.toString().split(" ")[3],
+      json: (obj) => JSON.stringify(obj)
     },
   })
 );
@@ -39,11 +46,16 @@ app.set("views", "views");
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(multer({ storage: imgStorage }).single("image"));
-app.use(homeRouter);
-app.use("/admin-books", booksRouter);
-app.use("/admin-categories", categoriesRouter);
-app.use("/admin-authors", authorsRouter);
-app.use("/admin-editorials", editorialsRouter);
+app.use(session({ secret: "mysecret", resave: true, saveUninitialized: false }));
+app.use(flash());
+app.use(csrfProtection);
+app.use(locals);
+app.use(authRouter);
+app.use("/books", redirects.isUnauthorized, homeRouter);
+app.use("/admin-books", redirects.isUnauthorized, booksRouter);
+app.use("/admin-categories", redirects.isUnauthorized, categoriesRouter);
+app.use("/admin-authors", redirects.isUnauthorized, authorsRouter);
+app.use("/admin-editorials", redirects.isUnauthorized, editorialsRouter);
 app.use(notFoundRouter);
 
 Categories.hasMany(Books, { onDelete: "CASCADE" });
@@ -60,10 +72,8 @@ Books.afterCreate(async (book, options) => {
 
 Books.beforeBulkUpdate(async (instance, options) => {
   const book = await getBook(instance.where.id);
-
-  if (book.authorId !== instance.attributes.authorId) {
+  if (book.authorId !== instance.attributes.authorId)
     sendDefaultMail(book.authorId, book.title);
-  }
 });
 
 databaseObj

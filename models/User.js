@@ -1,32 +1,27 @@
 const Sequelize = require("sequelize");
 const sequelizeObj = require("../util/databaseObj");
 
-const Books = sequelizeObj.define("books", {
+const User = sequelizeObj.define("users", {
   id: {
     type: Sequelize.STRING,
     allowNull: false,
     primaryKey: true,
   },
 
-  user_id: {
+  username: {
     type: Sequelize.STRING,
     allowNull: false,
   },
 
-  title: {
+  email: {
     type: Sequelize.STRING,
     allowNull: false,
   },
 
-  image: {
-    type: Sequelize.TEXT("long"),
-    allowNull: false,
-  },
-
-  publish_year: {
+  password: {
     type: Sequelize.STRING,
     allowNull: false,
   },
 });
 
-module.exports = Books;
+module.exports = User;

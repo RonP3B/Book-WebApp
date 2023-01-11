@@ -14,6 +14,7 @@
             action="/admin-editorials/{{#if edit}}edit{{else}}add{{/if}}" 
             class="form-save" 
           >
+            <input name="_csrf" value="{{csrfToken}}" type="hidden" />
             <div class="form-group mb-2">
               <label for="name">Nombre de la editorial:</label>
               <input

@@ -1,7 +1,7 @@
 <section class="container section">
   <a href="/admin-editorials/add" class="btn button margin-center mt-3">CREAR
     EDITORIAL</a>
-  {{#if noEditorials}}
+  {{#unless editorials}}
     <div class="warning-res">
       {{{logosObj.svgWarning}}}
       <h1 class="text-center">¡No hay editoriales para mostrar!</h1>
@@ -39,5 +39,5 @@
         </article>
       {{/each}}
     </div>
-  {{/if}}
+  {{/unless}}
 </section>

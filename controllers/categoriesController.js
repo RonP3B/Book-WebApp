@@ -1,18 +1,12 @@
-const { logosObj } = require("../exports/util");
 const { Categories } = require("../exports/models");
 const { internalErrorRes } = require("../exports/helpers");
 const crypto = require("crypto");
 
 exports.getCategories = async (req, res, next) => {
   try {
-    const categoriesRes = await Categories.findAll();
+    const categoriesRes = await Categories.findAll({ where: { user_id: req.session.user.id } });
     const categories = categoriesRes.map((res) => res.dataValues);
-
-    res.render("categories/admin-categories", {
-      logosObj,
-      categories,
-      noCategories: categories.length === 0,
-    });
+    res.render("categories/admin-categories", { categories });
   } catch (error) {
     console.log(`\nError: ${error}\n`);
     internalErrorRes(res);
@@ -20,23 +14,21 @@ exports.getCategories = async (req, res, next) => {
 };
 
 exports.getAddCategory = (req, res, next) => {
-  res.render("categories/save-category", { logosObj, edit: false });
+  res.render("categories/save-category", { edit: false });
 };
 
 exports.getEditCategory = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const categoriesRes = await Categories.findOne({ where: { id } });
+    const categoriesRes = await Categories.findOne({
+      where: { id, user_id: req.session.user.id }
+    });
 
     if (!categoriesRes) return res.redirect("/admin-categories");
 
     const category = categoriesRes.dataValues;
 
-    res.render("categories/save-category", {
-      logosObj,
-      edit: true,
-      category,
-    });
+    res.render("categories/save-category", { edit: true, category });
   } catch (error) {
     console.log(`\nError: ${error}\n`);
     internalErrorRes(res);
@@ -46,20 +38,21 @@ exports.getEditCategory = async (req, res, next) => {
 exports.getDeleteCategory = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const categoriesRes = await Categories.findOne({ where: { id } });
+    const categoriesRes = await Categories.findOne({
+      where: { id, user_id: req.session.user.id }
+    });
 
     if (!categoriesRes) return res.redirect("/admin-categories");
 
-    const { name, related_books } = categoriesRes.dataValues;
+    const { name } = categoriesRes.dataValues;
 
     res.render("confirm", {
-      logosObj,
-      cascade: related_books > 0,
+      isNotBook: true,
       page: "categories",
       model: "Categoría",
       modelMsg: "esta categoría",
       name,
-      id,
+      id
     });
   } catch (error) {
     console.log(`\nError: ${error}\n`);
@@ -74,12 +67,13 @@ exports.postAddCategory = async (req, res, next) => {
     if (name && description) {
       await Categories.create({
         id: crypto.randomUUID(),
+        user_id: req.session.user.id,
         name,
-        description,
-        related_books: 0,
+        description
       });
     }
 
+    req.flash("msg", "Categoría creada exitosamente");
     res.redirect("/admin-categories");
   } catch (error) {
     console.log(`\nError: ${error}\n`);
@@ -92,9 +86,13 @@ exports.postEditCategory = async (req, res, next) => {
     const { id, name, description } = req.body;
 
     if (id && name && description) {
-      await Categories.update({ name, description }, { where: { id } });
+      await Categories.update(
+        { name, description },
+        { where: { id, user_id: req.session.user.id } }
+      );
     }
 
+    req.flash("msg", "Categoría editada exitosamente");
     res.redirect("/admin-categories");
   } catch (error) {
     console.log(`\nError: ${error}\n`);
@@ -105,7 +103,8 @@ exports.postEditCategory = async (req, res, next) => {
 exports.postDeleteCategory = async (req, res, next) => {
   try {
     const id = req.body.id;
-    await Categories.destroy({ where: { id } });
+    await Categories.destroy({ where: { id, user_id: req.session.user.id } });
+    req.flash("msg", "Categoría eliminada exitosamente");
     res.redirect("/admin-categories");
   } catch (error) {
     console.log(`\nError: ${error}\n`);

@@ -1,6 +1,6 @@
 <section class="section">
   <a href="/admin-books/add" class="btn button margin-center mt-3">CREAR LIBRO</a>
-  {{#if noBooks}}
+  {{#unless books}}
     <div class="warning-res">
       {{{logosObj.svgNoBook}}}
       <h1 class="text-center">¡No hay libros para mostrar!</h1>
@@ -41,5 +41,5 @@
         </article>
       {{/each}}
     </div>
-  {{/if}}
+  {{/unless}}
 </section>

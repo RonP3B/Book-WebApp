@@ -2,12 +2,12 @@ import { showToast } from "./showToast.js";
 
 const highlightFields = (container) => {
   $(`.${container} .required-field`).each(function () {
-    if ($(this).val().isEmpty()) $(this).addClass("border-danger");
-    else $(this).removeClass("border-danger");
+    if ($(this).val().isEmpty()) $(this).addClass("is-invalid");
+    else $(this).removeClass("is-invalid");
   });
 };
 
-const checkRequiredFields = (container) => {
+export const checkRequiredFields = (container) => {
   let res = true;
 
   $(`.${container} .required-field`).each(function () {
@@ -20,11 +20,13 @@ const checkRequiredFields = (container) => {
   return res;
 };
 
-export const validateForm = (form, toastMsg) => {
-  if (checkRequiredFields(form)) {
+export const validateForm = (form, toastMsg = "", validateFunc = null) => {
+  const validateFunction = validateFunc || checkRequiredFields;
+
+  if (validateFunction(form)) {
     $(`.${form}`).submit();
   } else {
     highlightFields(form);
-    showToast(toastMsg);
+    if (toastMsg) showToast(toastMsg);
   }
 };

@@ -234,6 +234,44 @@ const logosObj = {
       d="M13 14h-2V9h2m0 9h-2v-2h2M1 21h22L12 2L1 21Z"
     ></path>
   </svg>`,
+
+  svgAuthentication: `<svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="1em"
+      height="1em"
+      preserveAspectRatio="xMidYMid meet"
+      viewBox="0 0 24 24"
+    ><path
+        fill="currentColor"
+        d="M17 3h-3v3h-4V3H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2m-5 5a2 2 0 0 1 2 2a2 2 0 0 1-2 2a2 2 0 0 1-2-2a2 2 0 0 1 2-2m4 8H8v-1c0-1.33 2.67-2 4-2s4 .67 4 2v1M13 5h-2V1h2v4m3 14H8v-1h8v1m-4 2H8v-1h4v1Z"
+      ></path>
+    </svg>`,
+
+  svgNewUser: `<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1em"
+    height="1em"
+    preserveAspectRatio="xMidYMid meet"
+    viewBox="0 0 24 24"
+  ><path
+      fill="currentColor"
+      d="M15 14c-2.67 0-8 1.33-8 4v2h16v-2c0-2.67-5.33-4-8-4m-9-4V7H4v3H1v2h3v3h2v-3h3v-2m6 2a4 4 0 0 0 4-4a4 4 0 0 0-4-4a4 4 0 0 0-4 4a4 4 0 0 0 4 4Z"
+    ></path>
+  </svg>`,
+
+  svgResetPassword: `<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1em"
+    height="1em"
+    preserveAspectRatio="xMidYMid meet"
+    viewBox="0 0 24 24"
+  >
+    <path
+      fill="currentColor"
+      d="M13 21q-1.85 0-3.462-.688q-1.613-.687-2.838-1.887L8.125 17q.95.925 2.2 1.462Q11.575 19 13 19q2.9 0 4.95-2.05Q20 14.9 20 12q0-2.9-2.05-4.95Q15.9 5 13 5q-2.9 0-4.95 2.05Q6 9.1 6 12v.175l1.825-1.825l1.425 1.4L5 16L.75 11.75l1.425-1.4L4 12.2V12q0-1.875.713-3.513q.712-1.637 1.925-2.85q1.212-1.212 2.85-1.925Q11.125 3 13 3t3.513.712q1.637.713 2.85 1.925q1.212 1.213 1.925 2.85Q22 10.125 22 12q0 3.75-2.625 6.375T13 21Zm-2-5q-.425 0-.712-.288Q10 15.425 10 15v-3q0-.425.288-.713Q10.575 11 11 11v-1q0-.825.588-1.413Q12.175 8 13 8t1.413.587Q15 9.175 15 10v1q.425 0 .713.287q.287.288.287.713v3q0 .425-.287.712Q15.425 16 15 16Zm1-5h2v-1q0-.425-.287-.713Q13.425 9 13 9t-.712.287Q12 9.575 12 10Z"
+    ></path>
+  </svg>
+  `
 };
 
 module.exports = logosObj;

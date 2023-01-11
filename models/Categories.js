@@ -8,6 +8,11 @@ const Categories = sequelizeObj.define("categories", {
     primaryKey: true,
   },
 
+  user_id: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+
   name: {
     type: Sequelize.STRING,
     allowNull: false,
